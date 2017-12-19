@@ -6,13 +6,28 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+
 public class Main extends Application {
+
+    public static Scene mainStage;
+    public static Stage primaryStage;
+
+    public static MainController mainScreenController = new MainController();
+
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("MainScreen.fxml"));
+        FXMLLoader mainLoad = new FXMLLoader(getClass().getResource("MainScreen.fxml"));
+        Parent mainScreen = mainLoad.load();
+        mainScreenController = mainLoad.getController();
+        mainScreenController.setMainController(this);
+        mainStage = new Scene(mainScreen);
         primaryStage.setTitle("Tribal Wars Bot");
-        primaryStage.setScene(new Scene(root, 600, 450));
+        primaryStage.setResizable(true);
+        primaryStage.setScene(mainStage);
+        primaryStage.setWidth(600);
+        primaryStage.setHeight(400);
+        primaryStage.centerOnScreen();
         primaryStage.show();
     }
 

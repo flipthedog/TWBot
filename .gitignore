@@ -23,3 +23,7 @@ hs_err_pid*
 
 # Compiled folder
 out/
+
+# IntelliJ Files
+TribalWarsBot.iml
+.idea/
