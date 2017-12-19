@@ -29,6 +29,7 @@ public class Main extends Application {
         primaryStage.setHeight(400);
         primaryStage.centerOnScreen();
         primaryStage.show();
+        mainScreenController.setStatus("Please enter your login information");
     }
 
     public static void main(String[] args) {

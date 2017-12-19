@@ -16,7 +16,7 @@
          <center>
             <HBox prefHeight="400.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                <children>
-                  <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="176.0">
+                  <VBox fx:id="leftVBox" alignment="TOP_CENTER" prefHeight="400.0" prefWidth="176.0">
                      <children>
                         <Label text="Status:">
                            <font>
