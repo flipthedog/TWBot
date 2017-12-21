@@ -18,7 +18,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-public class MainController {
+public class MainController implements Data{
 
     @FXML
     private Label status;
@@ -46,6 +46,7 @@ public class MainController {
         setStatus("Starting Web Driver");
         System.setProperty("webdriver.chrome.driver", "C:\\Users\\Floris\\Documents\\TribalWarsBot\\lib\\chromedriver.exe");
         driver = new ChromeDriver();
+        data.driver = driver;
         driver.get("https://www.tribalwars.net");
 
         setStatus("Logging in");
@@ -100,5 +101,8 @@ public class MainController {
         } catch (NoSuchElementException e){
             System.out.println("There is no open daily quest");
         }
+        data.driver.findElement(By.className("desktop")).sendKeys("v");
+        data.homeURL = data.driver.getCurrentUrl().replaceAll("overview", "");
+        Building.build("statue");
     }
 }
