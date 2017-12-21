@@ -19,6 +19,8 @@ import java.util.List;
 
 
 public class MainController implements Data{
+    Barbarian barb;
+    Building build;
 
     @FXML
     private Label status;
@@ -30,11 +32,17 @@ public class MainController implements Data{
     private JFXTextField userField;
     @FXML
     private JFXPasswordField passwordField;
+    @FXML
+    private JFXTextField barbarianX;
+    @FXML
+    private JFXTextField barbarianY;
+
 
     public WebDriver driver;
 
     public MainController() {
-
+        barb = new Barbarian();
+        build = new Building();
     }
 
     private Main mainController;
@@ -103,6 +111,9 @@ public class MainController implements Data{
         }
         data.driver.findElement(By.className("desktop")).sendKeys("v");
         data.homeURL = data.driver.getCurrentUrl().replaceAll("overview", "");
-        Building.build("statue");
+    }
+
+    public void addVillage(){
+        barb.addVillage(Integer.parseInt(barbarianX.getText()), Integer.parseInt(barbarianY.getText()));
     }
 }

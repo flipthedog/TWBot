@@ -16,11 +16,11 @@
          <center>
             <HBox prefHeight="400.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                <children>
-                  <VBox fx:id="leftVBox" alignment="TOP_CENTER" prefHeight="400.0" prefWidth="176.0">
+                  <VBox fx:id="leftVBox" alignment="TOP_CENTER" prefHeight="368.0" prefWidth="199.0">
                      <children>
                         <Label text="Status:">
                            <font>
-                              <Font name="AR ESSENCE" size="22.0" />
+                              <Font name="Book Antiqua" size="18.0" />
                            </font>
                         </Label>
                         <Label fx:id="status" />
@@ -29,8 +29,24 @@
                         <JFXTextField fx:id="userField" promptText="Enter Username" />
                         <Label fx:id="passwordButt" text="Password" />
                         <JFXPasswordField fx:id="passwordField" promptText="Enter Password" />
-                        <JFXButton fx:id="startBot" onAction="#startBot" ripplerFill="#c3b8b8" text="Start Bot" />
+                        <JFXButton fx:id="startBot" buttonType="RAISED" onAction="#startBot" ripplerFill="#eb0000" text="Start Bot" />
                         <JFXCheckBox fx:id="newWorld" text="New World?" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" prefHeight="368.0" prefWidth="175.0">
+                     <children>
+                        <Label text="Add Farm Villages">
+                           <font>
+                              <Font name="Book Antiqua" size="18.0" />
+                           </font>
+                        </Label>
+                        <HBox alignment="CENTER_LEFT" prefHeight="49.0" prefWidth="175.0">
+                           <children>
+                              <JFXTextField fx:id="barbarianX" prefHeight="25.0" prefWidth="42.0" promptText="Enter X Coord" text="X: " />
+                              <JFXTextField fx:id="barbarianY" prefHeight="25.0" prefWidth="42.0" promptText="Enter Y Coord" text="Y:" />
+                              <JFXButton onAction="#addVillage" text="Add" />
+                           </children>
+                        </HBox>
                      </children>
                   </VBox>
                </children>

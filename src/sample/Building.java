@@ -175,15 +175,15 @@ public class Building implements Data{
         } else if (building.equals("wood")) {
             data.driver.findElement(By.id("main_buildrow_wood")).findElement(By.className("btn-build")).click();
         } else if (building.equals("stone")) {
-
+            data.driver.findElement(By.id("main_buildrow_stone")).findElement(By.className("btn-build")).click();
         } else if (building.equals("iron")) {
-
+            data.driver.findElement(By.id("main_buildrow_iron")).findElement(By.className("btn-build")).click();
         } else if (building.equals("farm")) {
-
+            data.driver.findElement(By.id("main_buildrow_farm")).findElement(By.className("btn-build")).click();
         } else if (building.equals("storage")) {
-
+            data.driver.findElement(By.id("main_buildrow_storage")).findElement(By.className("btn-build")).click();
         } else if (building.equals("hide")){
-
+            data.driver.findElement(By.id("main_buildrow_hide")).findElement(By.className("btn-build")).click();
         }
         goToScreen(0);
     }
