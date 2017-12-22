@@ -29,7 +29,7 @@
                         <JFXTextField fx:id="userField" promptText="Enter Username" />
                         <Label fx:id="passwordButt" text="Password" />
                         <JFXPasswordField fx:id="passwordField" promptText="Enter Password" />
-                        <JFXButton fx:id="startBot" buttonType="RAISED" onAction="#startBot" ripplerFill="#eb0000" text="Start Bot" />
+                        <JFXButton fx:id="startBot" buttonType="RAISED" onAction="#startBot" prefHeight="36.0" prefWidth="63.0" ripplerFill="#eb0000" text="Start Bot" />
                         <JFXCheckBox fx:id="newWorld" text="New World?" />
                      </children>
                   </VBox>
@@ -47,6 +47,16 @@
                               <JFXButton onAction="#addVillage" text="Add" />
                            </children>
                         </HBox>
+                        <Label text="Start Bot">
+                           <font>
+                              <Font name="Book Antiqua" size="18.0" />
+                           </font>
+                        </Label>
+                        <JFXToggleButton fx:id="startStop" onAction="#toggleBot" text="Stop/Start" toggleColor="#696b69" toggleLineColor="#0cf73e" unToggleColor="#3c3b3b" unToggleLineColor="#f70a0a">
+                           <font>
+                              <Font name="Book Antiqua" size="14.0" />
+                           </font>
+                        </JFXToggleButton>
                      </children>
                   </VBox>
                </children>

@@ -3,6 +3,7 @@ package sample;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXToggleButton;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -21,7 +22,11 @@ import java.util.List;
 public class MainController implements Data{
     Barbarian barb;
     Building build;
+    Attack attack;
+    Brain brain;
 
+    @FXML
+    private JFXToggleButton startStop;
     @FXML
     private Label status;
     @FXML
@@ -43,6 +48,8 @@ public class MainController implements Data{
     public MainController() {
         barb = new Barbarian();
         build = new Building();
+        attack = new Attack();
+        brain = new Brain();
     }
 
     private Main mainController;
@@ -111,9 +118,18 @@ public class MainController implements Data{
         }
         data.driver.findElement(By.className("desktop")).sendKeys("v");
         data.homeURL = data.driver.getCurrentUrl().replaceAll("overview", "");
+        System.out.println(attack.updateTroops());
     }
 
     public void addVillage(){
         barb.addVillage(Integer.parseInt(barbarianX.getText()), Integer.parseInt(barbarianY.getText()));
     }
+
+    @FXML
+    public void toggleBot(){
+        brain.updateState(startStop.isSelected());
+        brain.runLoop();
+    }
+
+
 }
