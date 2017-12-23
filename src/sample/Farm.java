@@ -7,6 +7,7 @@ public class Farm implements Data{
     int maxPopulation;
 
     public Farm() {
+        System.out.println("Initialized farm");
         updatePopulation();
     }
 
@@ -14,7 +15,6 @@ public class Farm implements Data{
      * Update the current population values based on the overview screen
      */
     public void updatePopulation() {
-        Building.goToScreen("overview");
         this.usedPopulation = Integer.parseInt(data.driver.findElement(By.id("pop_current_label")).getText());
         this.maxPopulation = Integer.parseInt(data.driver.findElement(By.id("pop_max_label")).getText());
     }
@@ -31,4 +31,13 @@ public class Farm implements Data{
         }
     }
 
+    public int getMaxPopulation() {
+        updatePopulation();
+        return maxPopulation;
+    }
+
+    public int getUsedPopulation() {
+        updatePopulation();
+        return usedPopulation;
+    }
 }

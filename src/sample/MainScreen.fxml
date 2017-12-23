@@ -25,26 +25,41 @@
                         </Label>
                         <Label fx:id="status" />
                         <Label />
-                        <Label text="Username" />
+                        <Label text="Username">
+                           <font>
+                              <Font name="Book Antiqua" size="12.0" />
+                           </font></Label>
                         <JFXTextField fx:id="userField" promptText="Enter Username" />
-                        <Label fx:id="passwordButt" text="Password" />
+                        <Label fx:id="passwordButt" text="Password">
+                           <font>
+                              <Font name="Book Antiqua" size="12.0" />
+                           </font></Label>
                         <JFXPasswordField fx:id="passwordField" promptText="Enter Password" />
                         <JFXButton fx:id="startBot" buttonType="RAISED" onAction="#startBot" prefHeight="36.0" prefWidth="63.0" ripplerFill="#eb0000" text="Start Bot" />
                         <JFXCheckBox fx:id="newWorld" text="New World?" />
                      </children>
                   </VBox>
-                  <VBox alignment="TOP_CENTER" prefHeight="368.0" prefWidth="175.0">
+                  <VBox alignment="TOP_CENTER" prefHeight="368.0" prefWidth="193.0">
                      <children>
                         <Label text="Add Farm Villages">
                            <font>
                               <Font name="Book Antiqua" size="18.0" />
                            </font>
                         </Label>
-                        <HBox alignment="CENTER_LEFT" prefHeight="49.0" prefWidth="175.0">
+                        <HBox alignment="CENTER" prefHeight="49.0" prefWidth="175.0">
                            <children>
-                              <JFXTextField fx:id="barbarianX" prefHeight="25.0" prefWidth="42.0" promptText="Enter X Coord" text="X: " />
-                              <JFXTextField fx:id="barbarianY" prefHeight="25.0" prefWidth="42.0" promptText="Enter Y Coord" text="Y:" />
-                              <JFXButton onAction="#addVillage" text="Add" />
+                              <Label text="X:">
+                                 <font>
+                                    <Font name="Book Antiqua" size="12.0" />
+                                 </font>
+                              </Label>
+                              <JFXTextField fx:id="barbarianX" prefHeight="25.0" prefWidth="42.0" promptText="Enter X Coord" />
+                              <Label text="Y:" />
+                              <JFXTextField fx:id="barbarianY" prefHeight="25.0" prefWidth="42.0" promptText="Enter Y Coord" />
+                              <JFXButton onAction="#addVillage" text="Add">
+                                 <font>
+                                    <Font name="Book Antiqua" size="12.0" />
+                                 </font></JFXButton>
                            </children>
                         </HBox>
                         <Label text="Start Bot">
@@ -57,8 +72,24 @@
                               <Font name="Book Antiqua" size="14.0" />
                            </font>
                         </JFXToggleButton>
+                        <Label text="Minimum Troops">
+                           <font>
+                              <Font name="Book Antiqua" size="18.0" />
+                           </font>
+                        </Label>
+                        <HBox alignment="CENTER" prefHeight="43.0" prefWidth="193.0">
+                           <children>
+                              <JFXTextField fx:id="minimumTroop" promptText="Enter Minimum Troop Number" />
+                              <JFXButton onAction="#updateMinimumTroop" text="Submit">
+                                 <font>
+                                    <Font name="Book Antiqua" size="12.0" />
+                                 </font>
+                              </JFXButton>
+                           </children>
+                        </HBox>
                      </children>
                   </VBox>
+                  <VBox prefHeight="368.0" prefWidth="197.0" />
                </children>
             </HBox>
          </center>

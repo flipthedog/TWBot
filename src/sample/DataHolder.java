@@ -18,4 +18,9 @@ public class DataHolder implements Data{
      * Interval in seconds between bot loops
      */
     public int botInterval;
+
+    /**
+     * The current minimum troop farm count
+     */
+    public int minimumTroopCount;
 }

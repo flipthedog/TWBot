@@ -23,6 +23,8 @@ public class MainController implements Data{
     Brain brain;
 
     @FXML
+    private JFXTextField minimumTroop;
+    @FXML
     private JFXToggleButton startStop;
     @FXML
     private Label status;
@@ -43,7 +45,6 @@ public class MainController implements Data{
     public WebDriver driver;
 
     public MainController() {
-        brain = new Brain();
     }
 
     private Main mainController;
@@ -112,16 +113,25 @@ public class MainController implements Data{
         }
         data.driver.findElement(By.className("desktop")).sendKeys("v");
         data.homeURL = data.driver.getCurrentUrl().replaceAll("overview", "");
+        brain = new Brain(this.status);
     }
 
     public void addVillage(){
         brain.addVillage(Integer.parseInt(barbarianX.getText()),Integer.parseInt(barbarianY.getText()));
+        barbarianX.clear();
+        barbarianY.clear();
+        setStatus("Added a barbarian village");
     }
 
     @FXML
     public void toggleBot(){
         brain.updateState(startStop.isSelected());
         brain.runLoop();
+    }
+
+    @FXML
+    public void updateMinimumTroop() {
+        data.minimumTroopCount = Integer.parseInt(minimumTroop.getText());
     }
 
 }
