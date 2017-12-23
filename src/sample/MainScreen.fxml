@@ -87,14 +87,50 @@
                               </JFXButton>
                            </children>
                         </HBox>
+                        <Label text="Bot Interval">
+                           <font>
+                              <Font name="Book Antiqua" size="18.0" />
+                           </font>
+                        </Label>
+                        <HBox alignment="CENTER" prefHeight="43.0" prefWidth="193.0">
+                           <children>
+                              <JFXTextField fx:id="botInterval" promptText="Enter Bot Interval (Seconds)" />
+                              <JFXButton onAction="#updateBotInterval" text="Submit">
+                                 <font>
+                                    <Font name="Book Antiqua" size="12.0" />
+                                 </font>
+                              </JFXButton>
+                           </children>
+                        </HBox>
                      </children>
                   </VBox>
-                  <VBox prefHeight="368.0" prefWidth="197.0" />
+                  <VBox alignment="TOP_CENTER" prefHeight="368.0" prefWidth="197.0">
+                     <children>
+                        <Label text="Add Farm Villages">
+                           <font>
+                              <Font name="Book Antiqua" size="18.0" />
+                           </font>
+                        </Label>
+                        <HBox alignment="CENTER" prefHeight="43.0" prefWidth="193.0">
+                           <children>
+                              <JFXButton fx:id="templateButton" buttonType="RAISED" onAction="#templateScreen" text="Add Troop Template">
+                                 <font>
+                                    <Font name="Book Antiqua" size="12.0" />
+                                 </font>
+                              </JFXButton>
+                           </children>
+                        </HBox>
+                        <Label text="Active Troop Templates">
+                           <font>
+                              <Font name="Book Antiqua" size="18.0" />
+                           </font>
+                        </Label>
+                     </children></VBox>
                </children>
             </HBox>
          </center>
          <top>
-            <Label text="Tribal Wars Bot" BorderPane.alignment="CENTER">
+            <Label prefHeight="40.0" prefWidth="174.0" text="Tribal Wars Bot" BorderPane.alignment="CENTER">
                <font>
                   <Font name="Book Antiqua" size="25.0" />
                </font>

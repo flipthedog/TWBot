@@ -74,7 +74,8 @@ public class Attack implements Data {
      * @return Linked list of troops to be sent on farm trip
      */
     public LinkedList<Integer> chooseFarmTroops() {
-        updateTroops();
+        updateTroops(); // update the current troops available
+
         LinkedList<Integer> farmTroops = new LinkedList<>();
         LinkedList<Integer> blankTroops = new LinkedList<>();
 
@@ -83,11 +84,31 @@ public class Attack implements Data {
             blankTroops.add(0);
         }
 
-        for (int i = 0; i < stationedTroops.size(); i++) {
-            if (stationedTroops.get(i) > data.minimumTroopCount) {
-                farmTroops.add(i, data.minimumTroopCount);
-                return farmTroops;
-            }
+        int spearMan = stationedTroops.get(0);
+        int swordMan = stationedTroops.get(1);
+        int axeMan = stationedTroops.get(2);
+
+        int LC = stationedTroops.get(4);
+        int HC = stationedTroops.get(5);
+
+        int paladin = stationedTroops.get(8);
+
+        if(paladin != 0) {
+            farmTroops.add(8,1);
+        }
+
+        if(spearMan > data.minimumTroopCount && swordMan > data.minimumTroopCount){
+            farmTroops.add(0,data.minimumTroopCount);
+            farmTroops.add(1,data.minimumTroopCount);
+            return farmTroops;
+        } else if (spearMan > data.minimumTroopCount && axeMan > data.minimumTroopCount) {
+            farmTroops.add(0,data.minimumTroopCount);
+            farmTroops.add(2,data.minimumTroopCount);
+            return farmTroops;
+        } else if (swordMan > data.minimumTroopCount && axeMan > data.minimumTroopCount) {
+            farmTroops.add(1,data.minimumTroopCount);
+            farmTroops.add(2,data.minimumTroopCount);
+            return farmTroops;
         }
 
         if(farmTroops.equals(blankTroops)){
@@ -95,7 +116,6 @@ public class Attack implements Data {
         } else {
             return farmTroops;
         }
-
     }
 
 }

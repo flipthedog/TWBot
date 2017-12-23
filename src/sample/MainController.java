@@ -23,6 +23,10 @@ public class MainController implements Data{
     Brain brain;
 
     @FXML
+    private JFXButton templateButton;
+    @FXML
+    private JFXTextField botInterval;
+    @FXML
     private JFXTextField minimumTroop;
     @FXML
     private JFXToggleButton startStop;
@@ -134,4 +138,17 @@ public class MainController implements Data{
         data.minimumTroopCount = Integer.parseInt(minimumTroop.getText());
     }
 
+    @FXML
+    public void updateBotInterval() {
+        data.botInterval = Integer.parseInt(botInterval.getText());
+    }
+
+    @FXML
+    public void templateScreen() {
+        LinkedList<Integer> troops = new LinkedList<>();
+        for(int i = 0; i < 10; i++){
+            troops.add(0);
+        }
+        mainController.setTroopTemplate(templateButton,troops);
+    }
 }
