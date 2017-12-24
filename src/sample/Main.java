@@ -69,7 +69,13 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         MainController cont = new MainController();
-        launch(args);
+        Database.addVillage(300,500);
+        Database.addVillage(400,200);
+        System.out.println(Database.getVillage(1));
+
+        //launch(args);
+//        Database base = new Database();
+     //   Database.createTable();
     }
 
 }
