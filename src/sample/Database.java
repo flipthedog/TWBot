@@ -24,6 +24,28 @@ public class Database {
         }
     }
 
+    public static void initDatabase() {
+        dropTables();
+        createBarbarianTable();
+        createTemplateTable();
+    }
+
+    public static void dropTables() {
+        try {
+            final String url = "jdbc:derby://localhost:1527/data";
+            Connection con = DriverManager.getConnection(url);
+            Statement s = con.createStatement();
+
+            s.execute("DROP TABLE BARBARIAN");
+            System.out.println("Dropped barbarian table");
+
+            s.execute("DROP TABLE TEMPLATE");
+            System.out.println("Dropped template table");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     public static void createBarbarianTable() {
 
         try {
@@ -33,8 +55,30 @@ public class Database {
 
             s.execute("CREATE TABLE Barbarian (" +
                     "x INTEGER NOT NULL, " +
-                    "y INTEGER, " +
                     "PRIMARY KEY (x)" +
+                    ")");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void createTemplateTable() {
+        try {
+            final String url = "jdbc:derby://localhost:1527/data";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+
+            s.execute("CREATE TABLE Template (" +
+                    "row INTEGER NOT NULL," +
+                    "spear INTEGER," +
+                    "sword INTEGER," +
+                    "axe INTEGER," +
+                    "scouts INTEGER," +
+                    "LC INTEGER," +
+                    "HC INTEGER," +
+                    "Rams INTEGER," +
+                    "Cats INTEGER,"+
+                    "PRIMARY KEY (row)" +
                     ")");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -57,9 +101,8 @@ public class Database {
 
             while(r.next()) {
                 int x = r.getInt("x");
-                int y = r.getInt("y");
-
-                villages.add(new Point(x,y));
+                String intStr = Integer.toString(x);
+                villages.add(new Point(Integer.parseInt(intStr.substring(0,3)),Integer.parseInt(intStr.substring(3,6))));
             }
 
         } catch (SQLException e) {
@@ -75,26 +118,32 @@ public class Database {
      * @return Return the point of the village
      */
     public static Point2D getVillage(int n) {
+
         int rows = getRowCount();
+
         if(n > rows){
             return null;
         }
+
         try {
 
             final String url = "jdbc:derby://localhost:1527/data";
             Connection c = DriverManager.getConnection(url);
             Statement s = c.createStatement();
             ResultSet r = s.executeQuery("SELECT * FROM BARBARIAN");
+
             for(int i = 0; i <= n; i++) {
                 r.next();
-                System.out.println("Cycled");
             }
-            return new Point(r.getInt("x"), r.getInt("y"));
+
+            String total = Integer.toString(r.getInt("x"));
+
+            return new Point(Integer.parseInt(total.substring(0,3)),Integer.parseInt(total.substring(3,6)));
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        //return new Point(x,y);
+
         return null;
     }
 
@@ -104,13 +153,15 @@ public class Database {
      * @param y
      */
     public static void addVillage(int x, int y) {
-
+        String xStr = Integer.toString(x);
+        String yStr = Integer.toString(y);
+        String total = xStr + yStr;
         try {
             final String url = "jdbc:derby://localhost:1527/data";
             Connection c = DriverManager.getConnection(url);
             Statement s = c.createStatement();
-            s.execute("INSERT INTO BARBARIAN(x,y) VALUES (" +
-                    x + "," + y +
+            s.execute("INSERT INTO BARBARIAN(x) VALUES (" +
+                    total +
                     ")");
         } catch (SQLException e) {
             e.printStackTrace();
