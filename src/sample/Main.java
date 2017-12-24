@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.sql.SQLException;
 import java.util.LinkedList;
 
 
@@ -67,11 +68,12 @@ public class Main extends Application {
         popUp.showAndWait();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         MainController cont = new MainController();
-        Database.addVillage(300,500);
-        Database.addVillage(400,200);
-        System.out.println(Database.getVillage(1));
+        //Database.addVillage(300,500);
+        //Database.addVillage(400,200);
+        Database.addVillage(500,300);
+        System.out.println(Database.getVillage(2));
 
         //launch(args);
 //        Database base = new Database();

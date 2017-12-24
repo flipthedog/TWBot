@@ -1,9 +1,11 @@
 package sample;
 
 import net.bytebuddy.dynamic.scaffold.MethodGraph;
+import org.apache.derby.vti.VTIEnvironment;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
+import java.io.Serializable;
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.Vector;
@@ -22,7 +24,7 @@ public class Database {
         }
     }
 
-    public static void createTable() {
+    public static void createBarbarianTable() {
 
         try {
             final String url = "jdbc:derby://localhost:1527/data";
@@ -67,31 +69,40 @@ public class Database {
         return villages;
     }
 
+    /**
+     * Get a village with a specific row count
+     * @param n the row count of the village
+     * @return Return the point of the village
+     */
     public static Point2D getVillage(int n) {
-        int x = 0;
-        int y = 0;
-
+        int rows = getRowCount();
+        if(n > rows){
+            return null;
+        }
         try {
 
             final String url = "jdbc:derby://localhost:1527/data";
             Connection c = DriverManager.getConnection(url);
             Statement s = c.createStatement();
-            ResultSet r = s.executeQuery("SELECT  * FROM (" +
-                    "SELECT " +
-                    "ROW_NUMBER() OVER () AS R, " +
-                    "C " +
-                    "FROM BARBARIAN" +
-                    ") AS foo" +
-                    "WHERE R <= 2;");
-            x = r.getInt("x");
-            y = r.getInt("y");
+            ResultSet r = s.executeQuery("SELECT * FROM BARBARIAN");
+            for(int i = 0; i <= n; i++) {
+                r.next();
+                System.out.println("Cycled");
+            }
+            return new Point(r.getInt("x"), r.getInt("y"));
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return new Point(x,y);
+        //return new Point(x,y);
+        return null;
     }
 
+    /**
+     * Add a village to the database
+     * @param x
+     * @param y
+     */
     public static void addVillage(int x, int y) {
 
         try {
@@ -105,4 +116,27 @@ public class Database {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Get the number of rows currently in the database
+     * @return
+     */
+    public static int getRowCount() {
+
+        try {
+
+            final String url = "jdbc:derby://localhost:1527/data";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+            ResultSet r = s.executeQuery("SELECT COUNT(*) FROM BARBARIAN");
+            r.next();
+            return r.getInt(1);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return -1; // return an error value
+    }
+
 }
