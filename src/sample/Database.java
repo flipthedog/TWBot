@@ -77,13 +77,19 @@ public class Database {
                     "LC INTEGER," +
                     "HC INTEGER," +
                     "Rams INTEGER," +
-                    "Cats INTEGER,"+
+                    "Cats INTEGER," +
+                    "Paladin INTEGER,"+
                     "PRIMARY KEY (row)" +
                     ")");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
+    /** ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     *  CONTAINS ALL THE BARBARIAN TABLE FUNCTIONS
+     *  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     * /
 
     /**
      * Return all the barbarian villages
@@ -119,7 +125,7 @@ public class Database {
      */
     public static Point2D getVillage(int n) {
 
-        int rows = getRowCount();
+        int rows = getBarbarianRowCount();
 
         if(n > rows){
             return null;
@@ -172,7 +178,7 @@ public class Database {
      * Get the number of rows currently in the database
      * @return
      */
-    public static int getRowCount() {
+    public static int getBarbarianRowCount() {
 
         try {
 
@@ -188,6 +194,96 @@ public class Database {
         }
 
         return -1; // return an error value
+    }
+
+/** ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ *  CONTAINS ALL THE TEMPLATE TABLE FUNCTIONS
+ *  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ */
+
+    public static void addTemplate(LinkedList<Integer> troops) {
+        int rows = getTemplateRowCount() + 1;
+        try {
+
+            final String url = "jdbc:derby://localhost:1527/data";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+            s.execute("INSERT INTO TEMPLATE(ROW, SPEAR,SWORD,AXE,SCOUTS,LC,HC,RAMS,CATS,PALADIN) VALUES(" +
+                    rows + troops.get(0) + troops.get(1) + troops.get(2) + troops.get(3) + troops.get(4) + troops.get(5) + troops.get(6) + troops.get(7) + troops.get(8) +
+                    ")");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Return the row count of the template table
+     * @return int representing the number of rows
+     */
+    public static int getTemplateRowCount() {
+
+        try {
+
+            final String url = "jdbc:derby://localhost:1527/data";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+            ResultSet r = s.executeQuery("SELECT COUNT(*) FROM TEMPLATE");
+            r.next();
+            return r.getInt(1);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return -1; // return an error value
+    }
+
+    /**
+     * Return the a linked list representing a specific troop template of a row number
+     * @param rowNumber The row number of the template
+     * @return LinkedList of the template
+     */
+    public static LinkedList<Integer> getTroopTemplate(int rowNumber) {
+
+        LinkedList<Integer> returnTemplate = new LinkedList<>();
+        try {
+
+            final String url = "jdbc:derby://localhost:1527/data";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+            ResultSet r = s.executeQuery("SELECT * FROM TEMPLATE WHERE ROW = " + rowNumber);
+            returnTemplate.add(r.getInt("spear"));
+            returnTemplate.add(r.getInt("sword"));
+            returnTemplate.add(r.getInt("axe"));
+            returnTemplate.add(r.getInt("LC"));
+            returnTemplate.add(r.getInt("HC"));
+            returnTemplate.add(r.getInt("Rams"));
+            returnTemplate.add(r.getInt("Cats"));
+            returnTemplate.add(r.getInt("Paladin"));
+            returnTemplate.add(0);
+            return returnTemplate;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Something went wrong when running getTroopTemplate, returned null");
+
+        return null;
+
+    }
+
+    /**
+     * Get all the troop templates
+     * @return linked list of troops templates
+     */
+    public static LinkedList<LinkedList<Integer>> getAllTroopTemplates() {
+        LinkedList<LinkedList<Integer>> returnList = new LinkedList<>();
+        int rows = getTemplateRowCount();
+        for(int i = 0; i < rows ; i ++) {
+            returnList.add(getTroopTemplate(i));
+        }
+        return returnList;
     }
 
 }
