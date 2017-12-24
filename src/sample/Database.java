@@ -69,7 +69,7 @@ public class Database {
             Statement s = c.createStatement();
 
             s.execute("CREATE TABLE Template (" +
-                    "row INTEGER NOT NULL," +
+                    "rowname CHAR(25) NOT NULL," +
                     "spear INTEGER," +
                     "sword INTEGER," +
                     "axe INTEGER," +
@@ -79,7 +79,7 @@ public class Database {
                     "Rams INTEGER," +
                     "Cats INTEGER," +
                     "Paladin INTEGER,"+
-                    "PRIMARY KEY (row)" +
+                    "PRIMARY KEY (rowname)" +
                     ")");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -201,15 +201,20 @@ public class Database {
  *  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
  */
 
-    public static void addTemplate(LinkedList<Integer> troops) {
-        int rows = getTemplateRowCount() + 1;
+    /**
+     * Add a troop template to the database
+     * @param troops Add a linked list of troops
+     * @param templateName Key to the template, user defined name
+     */
+    public static void addTemplate(LinkedList<Integer> troops, String templateName) {
+
         try {
 
             final String url = "jdbc:derby://localhost:1527/data";
             Connection c = DriverManager.getConnection(url);
             Statement s = c.createStatement();
-            s.execute("INSERT INTO TEMPLATE(ROW, SPEAR,SWORD,AXE,SCOUTS,LC,HC,RAMS,CATS,PALADIN) VALUES(" +
-                    rows + troops.get(0) + troops.get(1) + troops.get(2) + troops.get(3) + troops.get(4) + troops.get(5) + troops.get(6) + troops.get(7) + troops.get(8) +
+            s.execute("INSERT INTO TEMPLATE (ROWNAME, SPEAR,SWORD,AXE,SCOUTS,LC,HC,RAMS,CATS,PALADIN) VALUES( '" +
+                    templateName + "'," + troops.get(0) + "," + troops.get(1) + "," + troops.get(2) + "," + troops.get(3) + "," + troops.get(4) + "," + troops.get(5) + "," + troops.get(6) + "," + troops.get(7) + "," + troops.get(8) +
                     ")");
 
         } catch (SQLException e) {
@@ -244,7 +249,7 @@ public class Database {
      * @param rowNumber The row number of the template
      * @return LinkedList of the template
      */
-    public static LinkedList<Integer> getTroopTemplate(int rowNumber) {
+    public static LinkedList<Integer> getTroopTemplate(String rowNumber) {
 
         LinkedList<Integer> returnTemplate = new LinkedList<>();
         try {
@@ -252,7 +257,7 @@ public class Database {
             final String url = "jdbc:derby://localhost:1527/data";
             Connection c = DriverManager.getConnection(url);
             Statement s = c.createStatement();
-            ResultSet r = s.executeQuery("SELECT * FROM TEMPLATE WHERE ROW = " + rowNumber);
+            ResultSet r = s.executeQuery("SELECT * FROM TEMPLATE WHERE ROWNAME = '" + rowNumber + "'");
             returnTemplate.add(r.getInt("spear"));
             returnTemplate.add(r.getInt("sword"));
             returnTemplate.add(r.getInt("axe"));
@@ -262,7 +267,9 @@ public class Database {
             returnTemplate.add(r.getInt("Cats"));
             returnTemplate.add(r.getInt("Paladin"));
             returnTemplate.add(0);
+            c.close();
             return returnTemplate;
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -279,11 +286,32 @@ public class Database {
      */
     public static LinkedList<LinkedList<Integer>> getAllTroopTemplates() {
         LinkedList<LinkedList<Integer>> returnList = new LinkedList<>();
-        int rows = getTemplateRowCount();
-        for(int i = 0; i < rows ; i ++) {
-            returnList.add(getTroopTemplate(i));
+
+        try {
+
+            final String url = "jdbc:derby://localhost:1527/data";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+            ResultSet r = s.executeQuery("SELECT * FROM TEMPLATE");
+            while (r.next()){
+                LinkedList<Integer> returnTemplate = new LinkedList<>();
+                returnTemplate.add(r.getInt("spear"));
+                returnTemplate.add(r.getInt("sword"));
+                returnTemplate.add(r.getInt("axe"));
+                returnTemplate.add(r.getInt("LC"));
+                returnTemplate.add(r.getInt("HC"));
+                returnTemplate.add(r.getInt("Rams"));
+                returnTemplate.add(r.getInt("Cats"));
+                returnTemplate.add(r.getInt("Paladin"));
+                returnList.add(returnTemplate);
+            }
+            c.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return returnList;
+
     }
 
 }

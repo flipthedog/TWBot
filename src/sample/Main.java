@@ -70,15 +70,24 @@ public class Main extends Application {
 
     public static void main(String[] args) throws SQLException {
         MainController cont = new MainController();
+
         //Database.addVillage(300,500);
         //Database.addVillage(400,200);
         //Database.addVillage(500,300);
-        System.out.println("Total rows: " + Database.getRowCount());
-        System.out.println(Database.getVillage(0));
-        System.out.println(Database.getVillage(1));
-        System.out.println(Database.getVillage(2));
+        //System.out.println("Total rows: " + Database.getRowCount());
+        //System.out.println(Database.getVillage(0));
+        //System.out.println(Database.getVillage(1));
+        //System.out.println(Database.getVillage(2));
         //Database.initDatabase();
-        //launch(args);
+
+       /* LinkedList<Integer> troops = new LinkedList<>();
+        for (int i = 0; i < 9; i ++) {
+            troops.add(0);
+        }
+        System.out.println("This is troops: " + troops);
+        Database.addTemplate(troops,"YOLOLO");
+        System.out.println("This is the row length: " + Database.getTemplateRowCount());*/
+        launch(args);
 //        Database base = new Database();
      //   Database.createTable();
     }

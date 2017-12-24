@@ -2,12 +2,15 @@ package sample;
 
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
+import sun.awt.image.ImageWatched;
 
 import java.util.LinkedList;
 
 public class TroopPresetController {
     private Main mainController;
 
+    @FXML
+    private JFXTextField templateName;
     @FXML
     private JFXTextField spears;
     @FXML
@@ -67,9 +70,28 @@ public class TroopPresetController {
 
     @FXML
     public void createTemplate() {
-
+        LinkedList<Integer> userTemplate = createTemplateFromFields();
+        Database.addTemplate(userTemplate,templateName.getText());
+        clearFields();
     }
 
+    private LinkedList<Integer> createTemplateFromFields() {
+        LinkedList<Integer> returnList = new LinkedList<>();
+
+        System.out.println("this is the trouble: ");
+        returnList.add(Integer.parseInt(spears.getText().trim()));
+        returnList.add(Integer.parseInt(swords.getText().trim()));
+        returnList.add(Integer.parseInt(axes.getText().trim()));
+        returnList.add(Integer.parseInt(scouts.getText().trim()));
+        returnList.add(Integer.parseInt(lightCavalry.getText().trim()));
+        returnList.add(Integer.parseInt(heavyCavalry.getText().trim()));
+        returnList.add(Integer.parseInt(rams.getText().trim()));
+        returnList.add(Integer.parseInt(cats.getText().trim()));
+        returnList.add(Integer.parseInt(paladin.getText().trim()));
+
+        return returnList;
+    }
+    @FXML
     public void removeTemplate() {
 
     }
