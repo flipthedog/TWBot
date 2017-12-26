@@ -14,6 +14,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import sun.awt.image.ImageWatched;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -22,6 +23,8 @@ import java.util.List;
 public class MainController implements Data{
     Brain brain;
 
+    @FXML
+    private VBox templateHolder2;
     @FXML
     private JFXButton templateButton;
     @FXML
@@ -49,6 +52,7 @@ public class MainController implements Data{
     public WebDriver driver;
 
     public MainController() {
+
     }
 
     private Main mainController;
@@ -72,6 +76,10 @@ public class MainController implements Data{
         elPassword.sendKeys(passwordField.getText());
         loginButt.click();
         listActiveWorlds();
+
+        JFXButton sadButton = new JFXButton();
+        sadButton.setText("LOL");
+        templateHolder2.getChildren().add(sadButton);
     }
 
     private void listActiveWorlds(){
@@ -145,10 +153,29 @@ public class MainController implements Data{
 
     @FXML
     public void templateScreen() {
-        LinkedList<Integer> troops = new LinkedList<>();
-        for(int i = 0; i < 10; i++){
-            troops.add(0);
-        }
-        mainController.setTroopTemplate(templateButton,troops);
+        mainController.setTroopTemplate(templateButton);
     }
+
+    public void addTemplateDisplay(LinkedList<Integer> troops, String templateName) {
+
+        JFXButton activeTemplateButton = new JFXButton();
+        activeTemplateButton.setText(templateName);
+        activeTemplateButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                mainController.setExistingTroopTemplate(activeTemplateButton, troops, templateName);
+            }
+        });
+
+        templateHolder2.getChildren().add(activeTemplateButton);
+    }
+
+    public void removeTemplateDisplay() {
+
+    }
+
+    public VBox getTemplateHolder() {
+        return this.templateHolder2;
+    }
+
 }

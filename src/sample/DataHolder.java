@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.scene.layout.VBox;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -23,4 +24,9 @@ public class DataHolder implements Data{
      * The current minimum troop farm count
      */
     public int minimumTroopCount;
+
+    /**
+     * The main controller for all classes to use
+     */
+    public MainController controller;
 }

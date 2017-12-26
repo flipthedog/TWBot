@@ -314,4 +314,19 @@ public class Database {
 
     }
 
+    public static void removeTemplate(String templateName) {
+
+        try {
+
+            final String url = "jdbc:derby://localhost:1527/data";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+            ResultSet r = s.executeQuery("DELETE FROM TEMPLATE WHERE ROWNAME = '" + templateName +"'");
+            c.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

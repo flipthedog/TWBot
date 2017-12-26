@@ -1,14 +1,21 @@
 package sample;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import sun.awt.image.ImageWatched;
 
 import java.util.LinkedList;
 
-public class TroopPresetController {
+
+public class TroopPresetController implements Data{
     private Main mainController;
 
+    @FXML
+    private Label templateStatus;
     @FXML
     private JFXTextField templateName;
     @FXML
@@ -38,7 +45,8 @@ public class TroopPresetController {
 
     public void setMainController(Main main){ this.mainController = main;}
 
-    public void setFields(LinkedList<Integer> troops) {
+    public void setFields(LinkedList<Integer> troops, String templateName) {
+        this.templateName.setText(templateName);
         spears.setText(troops.get(0).toString());
         swords.setText(troops.get(1).toString());
         axes.setText(troops.get(2).toString());
@@ -47,7 +55,7 @@ public class TroopPresetController {
         heavyCavalry.setText(troops.get(5).toString());
         rams.setText(troops.get(6).toString());
         cats.setText(troops.get(7).toString());
-        nobles.setText("0");
+        //nobles.setText("0");
         paladin.setText(troops.get(9).toString());
     }
 
@@ -72,6 +80,9 @@ public class TroopPresetController {
     public void createTemplate() {
         LinkedList<Integer> userTemplate = createTemplateFromFields();
         Database.addTemplate(userTemplate,templateName.getText());
+        templateStatus.setText("Added template: " + templateName.getText());
+
+        mainController.getMainScreenController().addTemplateDisplay(userTemplate,templateName.getText());
         clearFields();
     }
 
@@ -91,8 +102,14 @@ public class TroopPresetController {
 
         return returnList;
     }
+
     @FXML
     public void removeTemplate() {
-
+        Database.removeTemplate(templateName.getText());
+        templateStatus.setText("Removed template: " + templateName.getText());
+        clearFields();
     }
+
+
+
 }

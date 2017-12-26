@@ -125,6 +125,7 @@
                               <Font name="Book Antiqua" size="18.0" />
                            </font>
                         </Label>
+                        <VBox fx:id="templateHolder2" prefHeight="257.0" prefWidth="197.0" />
                      </children></VBox>
                </children>
             </HBox>

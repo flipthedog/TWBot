@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 
 
-public class Main extends Application {
+public class Main extends Application  implements  Data{
 
     public static Scene mainStage;
     public static Stage primaryStage;
@@ -26,7 +26,7 @@ public class Main extends Application {
 
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
 
         /**
          * Setting up a scene to allow adding and removing of farming templates
@@ -59,18 +59,33 @@ public class Main extends Application {
         popUp.close();
     }
 
-    public void setTroopTemplate(JFXButton butt, LinkedList<Integer> troops) {
+    public void setTroopTemplate(JFXButton butt) {
         popUp = new Stage();
         popUp.setScene(troopTemplateScene);
         popUp.setTitle("Troop Farming Template");
         popUp.initModality(Modality.APPLICATION_MODAL);
         popUp.initOwner(butt.getScene().getWindow());
+        LinkedList<Integer> troops = new LinkedList<>();
+        for(int i = 0; i < 10; i++){
+            troops.add(0);
+        }
+        troopPresetController.setFields(troops,"");
+        popUp.showAndWait();
+    }
+
+    public void setExistingTroopTemplate(JFXButton butt, LinkedList<Integer> troops, String templateName) {
+        popUp = new Stage();
+        popUp.setScene(troopTemplateScene);
+        popUp.setTitle("Troop Farming Template");
+        popUp.initModality(Modality.APPLICATION_MODAL);
+        popUp.initOwner(butt.getScene().getWindow());
+        troopPresetController.setFields(troops,templateName);
         popUp.showAndWait();
     }
 
     public static void main(String[] args) throws SQLException {
         MainController cont = new MainController();
-
+        data.controller = cont;
         //Database.addVillage(300,500);
         //Database.addVillage(400,200);
         //Database.addVillage(500,300);
@@ -90,6 +105,11 @@ public class Main extends Application {
         launch(args);
 //        Database base = new Database();
      //   Database.createTable();
+    }
+
+
+    public static MainController getMainScreenController() {
+        return mainScreenController;
     }
 
 }
