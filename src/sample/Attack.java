@@ -8,11 +8,14 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Attack implements Data {
+
     LinkedList<Integer> stationedTroops;
+    LinkedList<Template> activeTemplates;
 
     public Attack() {
         System.out.println("Initialized attack");
         stationedTroops = new LinkedList<>();
+        activeTemplates = new LinkedList<>();
     }
 
     /**
@@ -118,4 +121,41 @@ public class Attack implements Data {
         }
     }
 
+    public LinkedList<Integer> chooseTemplateFarmTroops() {
+
+        LinkedList<Integer> farmTroops = new LinkedList<>();
+
+        for(int i = 0; i < 9; i++) {
+            farmTroops.add(0);
+        }
+
+        // Update all the necessary information!
+        updateActiveTemplates();
+        updateTroops();
+
+        for(Template temp : activeTemplates) {
+            if(checkEnoughTroops(temp.getTroops())) {
+                farmTroops = temp.getTroops();
+            }
+        }
+
+        return farmTroops;
+    }
+
+    /**
+     * Helper function that returns a boolean if there are enough troops stationed
+     * @param troops input troops to check
+     * @return boolean return value (true == enough troop)
+     */
+    public boolean checkEnoughTroops(LinkedList<Integer> troops) {
+        for(int i = 0; i < stationedTroops.size(); i++) {
+            if(troops.get(i) > stationedTroops.get(i)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    public void updateActiveTemplates() {
+        activeTemplates = Database.getAllTroopTemplates();
+    }
 }
