@@ -30,4 +30,15 @@ public class Template {
         this.templateName = templateName;
     }
 
+    public JFXButton getBoundButton() {
+        return boundButton;
+    }
+
+    public String getTemplateName() {
+        return templateName;
+    }
+
+    public LinkedList<Integer> getTroops() {
+        return troops;
+    }
 }

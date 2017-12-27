@@ -61,6 +61,9 @@ public class MainController implements Data{
 
     public void setMainController(Main main){ this.mainController = main;}
 
+    public void initialize() {
+        updateTemplateDisplay();
+    }
     @FXML
     private void startBot(){
         setStatus("Starting Web Driver");
@@ -79,9 +82,6 @@ public class MainController implements Data{
         loginButt.click();
         listActiveWorlds();
 
-        JFXButton sadButton = new JFXButton();
-        sadButton.setText("LOL");
-        templateHolder2.getChildren().add(sadButton);
     }
 
     private void listActiveWorlds(){
@@ -158,7 +158,13 @@ public class MainController implements Data{
         mainController.setTroopTemplate(templateButton);
     }
 
-    public void addTemplateDisplay(LinkedList<Integer> troops, String templateName) {
+    /**
+     * Add a template to the VBox display
+     * @param temp
+     */
+    public void addTemplateDisplay(Template temp) {
+        String templateName = temp.getTemplateName();
+        LinkedList<Integer> troops = temp.getTroops();
 
         JFXButton activeTemplateButton = new JFXButton();
         activeTemplateButton.setText(templateName);
@@ -169,34 +175,21 @@ public class MainController implements Data{
             }
         });
 
+        temp.updateButton(activeTemplateButton);
         templateHolder2.getChildren().add(activeTemplateButton);
     }
 
-    public void removeTemplateDisplay(String templateName) {
-        ObservableList<Node> list = templateHolder2.getChildren();
-        Node theNodeWeAreLookingFor = null;
-        for(Node node: list) {
-            if(node.equals(JFXButton))
-            if(node.getText().equals("templateName")){
-                theNodeWeAreLookingFor = node;
-            }
-        }
-        list.removeAll(theNodeWeAreLookingFor);
-        System.out.println("This is the node that was removed: " + theNodeWeAreLookingFor.getAccessibleText());
-    }
-
+    /**
+     * This updates the VBox holding all the currently active templates
+     */
     public void updateTemplateDisplay() {
         templateHolder2.getChildren().clear();
 
-        LinkedList<LinkedList<Integer>> list = Database.getAllTroopTemplates();
+        LinkedList<Template> list = Database.getAllTroopTemplates();
 
-        for(LinkedList<Integer> subList: list) {
-            addTemplateDisplay(subList.subList(1,subList.size()-1), subList.get(0));
+        for(Template temp: list) {
+            addTemplateDisplay(temp);
         }
-    }
-
-    public VBox getTemplateHolder() {
-        return this.templateHolder2;
     }
 
 }

@@ -83,7 +83,8 @@ public class TroopPresetController implements Data{
         Database.addTemplate(userTemplate,templateName.getText());
         templateStatus.setText("Added template: " + templateName.getText());
 
-        mainController.getMainScreenController().addTemplateDisplay(userTemplate,templateName.getText());
+        Template newTemplate = new Template(templateName.getText(),userTemplate);
+        mainController.getMainScreenController().addTemplateDisplay(newTemplate);
         clearFields();
         mainController.setMainScreen();
     }
@@ -108,7 +109,7 @@ public class TroopPresetController implements Data{
     public void removeTemplate() {
         Database.removeTemplate(templateName.getText());
         templateStatus.setText("Removed template: " + templateName.getText());
-        mainController.getMainScreenController().removeTemplateDisplay(templateName.getText());
+        mainController.getMainScreenController().updateTemplateDisplay();
         clearFields();
         mainController.setMainScreen();
     }
