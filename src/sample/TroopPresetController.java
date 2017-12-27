@@ -56,10 +56,11 @@ public class TroopPresetController implements Data{
         rams.setText(troops.get(6).toString());
         cats.setText(troops.get(7).toString());
         //nobles.setText("0");
-        paladin.setText(troops.get(9).toString());
+        paladin.setText(troops.get(8).toString());
     }
 
     public void clearFields() {
+        templateName.clear();
         spears.clear();
         swords.clear();
         axes.clear();
@@ -84,12 +85,12 @@ public class TroopPresetController implements Data{
 
         mainController.getMainScreenController().addTemplateDisplay(userTemplate,templateName.getText());
         clearFields();
+        mainController.setMainScreen();
     }
 
     private LinkedList<Integer> createTemplateFromFields() {
         LinkedList<Integer> returnList = new LinkedList<>();
 
-        System.out.println("this is the trouble: ");
         returnList.add(Integer.parseInt(spears.getText().trim()));
         returnList.add(Integer.parseInt(swords.getText().trim()));
         returnList.add(Integer.parseInt(axes.getText().trim()));
@@ -107,7 +108,9 @@ public class TroopPresetController implements Data{
     public void removeTemplate() {
         Database.removeTemplate(templateName.getText());
         templateStatus.setText("Removed template: " + templateName.getText());
+        mainController.getMainScreenController().removeTemplateDisplay(templateName.getText());
         clearFields();
+        mainController.setMainScreen();
     }
 
 

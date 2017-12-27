@@ -4,9 +4,11 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXToggleButton;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import org.openqa.selenium.By;
@@ -170,8 +172,27 @@ public class MainController implements Data{
         templateHolder2.getChildren().add(activeTemplateButton);
     }
 
-    public void removeTemplateDisplay() {
+    public void removeTemplateDisplay(String templateName) {
+        ObservableList<Node> list = templateHolder2.getChildren();
+        Node theNodeWeAreLookingFor = null;
+        for(Node node: list) {
+            if(node.equals(JFXButton))
+            if(node.getText().equals("templateName")){
+                theNodeWeAreLookingFor = node;
+            }
+        }
+        list.removeAll(theNodeWeAreLookingFor);
+        System.out.println("This is the node that was removed: " + theNodeWeAreLookingFor.getAccessibleText());
+    }
 
+    public void updateTemplateDisplay() {
+        templateHolder2.getChildren().clear();
+
+        LinkedList<LinkedList<Integer>> list = Database.getAllTroopTemplates();
+
+        for(LinkedList<Integer> subList: list) {
+            addTemplateDisplay(subList.subList(1,subList.size()-1), subList.get(0));
+        }
     }
 
     public VBox getTemplateHolder() {

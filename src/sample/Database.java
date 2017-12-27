@@ -249,24 +249,26 @@ public class Database {
      * @param rowNumber The row number of the template
      * @return LinkedList of the template
      */
-    public static LinkedList<Integer> getTroopTemplate(String rowNumber) {
+    public static Template getTroopTemplate(String rowNumber) {
 
-        LinkedList<Integer> returnTemplate = new LinkedList<>();
+        LinkedList<Integer> troops = new LinkedList<>();
         try {
 
             final String url = "jdbc:derby://localhost:1527/data";
             Connection c = DriverManager.getConnection(url);
             Statement s = c.createStatement();
             ResultSet r = s.executeQuery("SELECT * FROM TEMPLATE WHERE ROWNAME = '" + rowNumber + "'");
-            returnTemplate.add(r.getInt("spear"));
-            returnTemplate.add(r.getInt("sword"));
-            returnTemplate.add(r.getInt("axe"));
-            returnTemplate.add(r.getInt("LC"));
-            returnTemplate.add(r.getInt("HC"));
-            returnTemplate.add(r.getInt("Rams"));
-            returnTemplate.add(r.getInt("Cats"));
-            returnTemplate.add(r.getInt("Paladin"));
-            returnTemplate.add(0);
+            String templateName = r.getString("rowname");
+            troops.add(r.getInt("spear"));
+            troops.add(r.getInt("sword"));
+            troops.add(r.getInt("axe"));
+            troops.add(r.getInt("LC"));
+            troops.add(r.getInt("HC"));
+            troops.add(r.getInt("Rams"));
+            troops.add(r.getInt("Cats"));
+            troops.add(r.getInt("Paladin"));
+            troops.add(0);
+            Template returnTemplate = new Template(templateName,troops);
             c.close();
             return returnTemplate;
 
@@ -284,8 +286,8 @@ public class Database {
      * Get all the troop templates
      * @return linked list of troops templates
      */
-    public static LinkedList<LinkedList<Integer>> getAllTroopTemplates() {
-        LinkedList<LinkedList<Integer>> returnList = new LinkedList<>();
+    public static LinkedList<Template> getAllTroopTemplates() {
+        LinkedList<Template> returnList = new LinkedList<>();
 
         try {
 
@@ -293,8 +295,10 @@ public class Database {
             Connection c = DriverManager.getConnection(url);
             Statement s = c.createStatement();
             ResultSet r = s.executeQuery("SELECT * FROM TEMPLATE");
+
             while (r.next()){
                 LinkedList<Integer> returnTemplate = new LinkedList<>();
+                String templateName = r.getString("rowname");
                 returnTemplate.add(r.getInt("spear"));
                 returnTemplate.add(r.getInt("sword"));
                 returnTemplate.add(r.getInt("axe"));
@@ -303,7 +307,9 @@ public class Database {
                 returnTemplate.add(r.getInt("Rams"));
                 returnTemplate.add(r.getInt("Cats"));
                 returnTemplate.add(r.getInt("Paladin"));
-                returnList.add(returnTemplate);
+                returnTemplate.add(0); //This represents the noble field
+                Template firstTemplate = new Template(templateName,returnTemplate);
+                returnList.add(firstTemplate);
             }
             c.close();
 
@@ -321,7 +327,7 @@ public class Database {
             final String url = "jdbc:derby://localhost:1527/data";
             Connection c = DriverManager.getConnection(url);
             Statement s = c.createStatement();
-            ResultSet r = s.executeQuery("DELETE FROM TEMPLATE WHERE ROWNAME = '" + templateName +"'");
+            s.execute("DELETE FROM TEMPLATE WHERE ROWNAME = '" + templateName +"'");
             c.close();
 
         } catch (SQLException e) {
