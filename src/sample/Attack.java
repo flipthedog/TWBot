@@ -36,6 +36,7 @@ public class Attack implements Data {
 
         data.driver.findElement(By.className("target-input-field")).sendKeys(Integer.toString(xTarget) + "|" + Integer.toString(yTarget));
         data.driver.findElement(By.id("target_attack")).click();
+        data.driver.findElement(By.id("troop_confirm_go")).click();
         Building.goToScreen("overview");
     }
 
@@ -148,7 +149,7 @@ public class Attack implements Data {
      * @return boolean return value (true == enough troop)
      */
     public boolean checkEnoughTroops(LinkedList<Integer> troops) {
-        for(int i = 0; i < stationedTroops.size(); i++) {
+        for(int i = 0; i < stationedTroops.size() - 1; i++) {
             if(troops.get(i) > stationedTroops.get(i)) {
                 return false;
             }

@@ -90,7 +90,7 @@ public class Brain implements Data{
         if(!farmTroops.equals(blankTroops)) {
 
             Point2D barbVill = barb.getFarmVillage();
-            //Attack.sendAttack(farmTroops,(int)barbVill.getX(),(int)barbVill.getY());
+            Attack.sendAttack(farmTroops,(int)barbVill.getX(),(int)barbVill.getY());
             System.out.println("!!!!!!!!!!!I am attempting to farm!!!!!!!");
             System.out.println("These are the troops: " + farmTroops);
             System.out.println("This is the village: " + barbVill + "\n\n\n");
