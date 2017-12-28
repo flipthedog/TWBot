@@ -20,13 +20,19 @@ public class Brain implements Data{
         barb = new Barbarian();
         build = new Building();
         attack = new Attack();
-        farm = new Farm();
+
         botState = false;
         timer = new Timer();
         data.botInterval = 2;
         this.status = status;
     }
 
+    /**
+     * Only called once the main village screen is actually available
+     */
+    public void delayedInitialize() {
+        farm = new Farm();
+    }
     public void runLoop(){
         if(botState) {
             //timer.schedule(new ExecuteCommands(),data.botInterval * 1000);
@@ -55,6 +61,10 @@ public class Brain implements Data{
 
     public void addVillage(int xTarget, int yTarget){
         barb.addVillage(xTarget, yTarget);
+    }
+
+    public void removeVillage(int xTarget, int yTarget) {
+        barb.removeVillage(xTarget,yTarget);
     }
 
     public void farm() {

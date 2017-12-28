@@ -18,6 +18,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import sun.awt.image.ImageWatched;
 
+import java.awt.geom.Point2D;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -25,6 +26,8 @@ import java.util.List;
 public class MainController implements Data{
     Brain brain;
 
+    @FXML
+    private VBox villageHolder;
     @FXML
     private VBox templateHolder2;
     @FXML
@@ -61,9 +64,15 @@ public class MainController implements Data{
 
     public void setMainController(Main main){ this.mainController = main;}
 
+    /**
+     * Called at the start of the main controller initialization
+     */
     public void initialize() {
         updateTemplateDisplay();
+        updateVillageDisplay();
+        brain = new Brain(this.status);
     }
+
     @FXML
     private void startBot(){
         setStatus("Starting Web Driver");
@@ -120,24 +129,53 @@ public class MainController implements Data{
     }
 
     public void checkDailyQuest() {
+
         try {
             driver.findElement(By.xpath("//a[text()='Open']")).click();
         } catch (NoSuchElementException e){
             System.out.println("There is no open daily quest");
         }
+
         data.driver.findElement(By.className("desktop")).sendKeys("v");
         data.homeURL = data.driver.getCurrentUrl().replaceAll("overview", "");
-        brain = new Brain(this.status);
+        brain.delayedInitialize();
     }
 
     public void addVillage(){
-        brain.addVillage(Integer.parseInt(barbarianX.getText()),Integer.parseInt(barbarianY.getText()));
-        barbarianX.clear();
-        barbarianY.clear();
-        setStatus("Added a barbarian village");
+        if(checkIfLegalVillage(Integer.parseInt(barbarianX.getText()), Integer.parseInt(barbarianY.getText()))) {
+            brain.addVillage(Integer.parseInt(barbarianX.getText()), Integer.parseInt(barbarianY.getText()));
+            barbarianX.clear();
+            barbarianY.clear();
+            setStatus("Added a barbarian village");
+            updateVillageDisplay();
+        }
     }
 
-    @FXML
+    public void removeVillage() {
+        if(checkIfLegalVillage(Integer.parseInt(barbarianX.getText()), Integer.parseInt(barbarianY.getText()))) {
+            brain.removeVillage(Integer.parseInt(barbarianX.getText()), Integer.parseInt(barbarianY.getText()));
+            barbarianX.clear();
+            barbarianY.clear();
+            setStatus("Removed a barbarian village");
+            updateVillageDisplay();
+        }
+    }
+
+    public boolean checkIfLegalVillage(int x, int y) {
+        String xStr = Integer.toString(x);
+        String yStr = Integer.toString(y);
+
+        if(xStr.length() > 3 || yStr.length() > 3) {
+            setStatus("The x or y coord is too long");
+            return false;
+        } else if (xStr.contains(" ") || yStr.contains(" ")) {
+            setStatus("No spaces!");
+            return false;
+        }
+
+        return true;
+    }
+
     public void toggleBot(){
         brain.updateState(startStop.isSelected());
         brain.runLoop();
@@ -190,6 +228,29 @@ public class MainController implements Data{
         for(Template temp: list) {
             addTemplateDisplay(temp);
         }
+    }
+
+    /**
+     * Update the VBox holding all the villages that are currently farmed
+     */
+    public void updateVillageDisplay() {
+        villageHolder.getChildren().clear();
+
+        LinkedList<Point2D> list = Database.getAllBarbarians();
+
+        for(Point2D point: list) {
+            addButtonDisplay(point);
+        }
+    }
+
+    /**
+     * Add a button to the village VBox
+     * @param point The point that needs to be added
+     */
+    public void addButtonDisplay(Point2D point) {
+        Label lbl = new Label();
+        lbl.setText("(" + (int)point.getX() + "," + (int)point.getY() + ")");
+        villageHolder.getChildren().add(lbl);
     }
 
 }

@@ -10,7 +10,7 @@ public class Barbarian {
 
     public Barbarian() {
         System.out.println("Initialized barbarian");
-        barbVillages = new LinkedList<>();
+        barbVillages = Database.getAllBarbarians();
         currentVillage = 0;
     }
 
@@ -21,6 +21,18 @@ public class Barbarian {
      */
     public void addVillage(int xCoord, int yCoord) {
         barbVillages.add(new Point(xCoord,yCoord));
+        Database.addVillage(xCoord,yCoord);
+    }
+
+    /**
+     * Remove a village from the database as well as the
+     * list in the barbarian class
+     * @param xCoord x coordinate of village
+     * @param yCoord y coordinate of village
+     */
+    public void removeVillage(int xCoord, int yCoord) {
+        barbVillages.remove(new Point(xCoord, yCoord));
+        Database.removeVillage(xCoord,yCoord);
     }
 
     /**

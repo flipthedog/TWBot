@@ -175,6 +175,26 @@ public class Database {
     }
 
     /**
+     * Remove a village from the database
+     * @param x
+     * @param y
+     */
+    public static void removeVillage(int x, int y) {
+
+        try {
+
+            final String url = "jdbc:derby://localhost:1527/data";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+            s.execute("DELETE FROM BARBARIAN WHERE X = " + x + y);
+            c.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * Get the number of rows currently in the database
      * @return
      */
@@ -320,6 +340,10 @@ public class Database {
 
     }
 
+    /**
+     * Remove a template from the database
+     * @param templateName
+     */
     public static void removeTemplate(String templateName) {
 
         try {
