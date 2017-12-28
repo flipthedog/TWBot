@@ -33,6 +33,10 @@ public class Brain implements Data{
     public void delayedInitialize() {
         farm = new Farm();
     }
+
+    /**
+     * Run the main loop of the bot
+     */
     public void runLoop(){
         if(botState) {
             //timer.schedule(new ExecuteCommands(),data.botInterval * 1000);
@@ -43,6 +47,10 @@ public class Brain implements Data{
         }
     }
 
+    /**
+     * Update whether the bot is on or off
+     * @param newState state of the bot (On == true)
+     */
     public void updateState(boolean newState) {
         botState = newState;
         if(botState){
@@ -67,6 +75,9 @@ public class Brain implements Data{
         barb.removeVillage(xTarget,yTarget);
     }
 
+    /**
+     * Send out a farm attack, called on an interval
+     */
     public void farm() {
         setStatus("Sending a farm attack");
         LinkedList<Integer> farmTroops = attack.chooseTemplateFarmTroops();

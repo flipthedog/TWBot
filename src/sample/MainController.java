@@ -93,6 +93,9 @@ public class MainController implements Data{
 
     }
 
+    /**
+     * List all the active worlds the user just logged into
+     */
     private void listActiveWorlds(){
         try {
             Thread.sleep(1000);
@@ -128,6 +131,9 @@ public class MainController implements Data{
         checkDailyQuest();
     }
 
+    /**
+     * Check if there is a daily quest, if there is open it
+     */
     public void checkDailyQuest() {
 
         try {
@@ -141,6 +147,9 @@ public class MainController implements Data{
         brain.delayedInitialize();
     }
 
+    /**
+     * Add a village to the barbarian village class
+     */
     public void addVillage(){
         if(checkIfLegalVillage(Integer.parseInt(barbarianX.getText()), Integer.parseInt(barbarianY.getText()))) {
             brain.addVillage(Integer.parseInt(barbarianX.getText()), Integer.parseInt(barbarianY.getText()));
@@ -151,6 +160,9 @@ public class MainController implements Data{
         }
     }
 
+    /**
+     * Remove the village from the barbarian village class
+     */
     public void removeVillage() {
         if(checkIfLegalVillage(Integer.parseInt(barbarianX.getText()), Integer.parseInt(barbarianY.getText()))) {
             brain.removeVillage(Integer.parseInt(barbarianX.getText()), Integer.parseInt(barbarianY.getText()));
@@ -161,6 +173,12 @@ public class MainController implements Data{
         }
     }
 
+    /**
+     * Checks if the user input is a legal village
+     * @param x
+     * @param y
+     * @return
+     */
     public boolean checkIfLegalVillage(int x, int y) {
         String xStr = Integer.toString(x);
         String yStr = Integer.toString(y);
@@ -176,21 +194,33 @@ public class MainController implements Data{
         return true;
     }
 
+    /**
+     * Toggle the bot on and off
+     */
     public void toggleBot(){
         brain.updateState(startStop.isSelected());
         brain.runLoop();
     }
 
+    /**
+     * Update the minimum troop count
+     */
     @FXML
     public void updateMinimumTroop() {
         data.minimumTroopCount = Integer.parseInt(minimumTroop.getText());
     }
 
+    /**
+     * Update the bot interval
+     */
     @FXML
     public void updateBotInterval() {
         data.botInterval = Integer.parseInt(botInterval.getText());
     }
 
+    /**
+     * Update the template screen
+     */
     @FXML
     public void templateScreen() {
         mainController.setTroopTemplate(templateButton);
