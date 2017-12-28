@@ -41,7 +41,7 @@ public class Brain implements Data{
         if(botState) {
             //timer.schedule(new ExecuteCommands(),data.botInterval * 1000);
             timer = new Timer();
-            timer.scheduleAtFixedRate(new ExecuteCommands(), data.botInterval * 1000, 1000);
+            timer.scheduleAtFixedRate(new ExecuteCommands(), data.botInterval * 100, 1000);
         } else {
             timer.cancel();
         }
@@ -81,13 +81,28 @@ public class Brain implements Data{
     public void farm() {
         setStatus("Sending a farm attack");
         LinkedList<Integer> farmTroops = attack.chooseTemplateFarmTroops();
-        Point2D barbVill = barb.getFarmVillage();
-        //Attack.sendAttack(farmTroops,(int)barbVill.getX(),(int)barbVill.getY());
-        System.out.println("I am attempting to farm");
-        System.out.println("These are the troops" + farmTroops);
+        LinkedList<Integer> blankTroops = new LinkedList<>();
+
+        for(int i = 0; i < 9; i++) {
+            blankTroops.add(0);
+        }
+
+        if(!farmTroops.equals(blankTroops)) {
+
+            Point2D barbVill = barb.getFarmVillage();
+            //Attack.sendAttack(farmTroops,(int)barbVill.getX(),(int)barbVill.getY());
+            System.out.println("!!!!!!!!!!!I am attempting to farm!!!!!!!");
+            System.out.println("These are the troops: " + farmTroops);
+            System.out.println("This is the village: " + barbVill + "\n\n\n");
+
+        } else {
+            System.out.println("No troop template");
+        }
+
     }
 
     public void setStatus(String status) {
-        this.status.setText(status);
+        //this.status.setText(status);
     }
+
 }

@@ -48,8 +48,6 @@ public class Main extends Application  implements  Data{
         primaryStage.setTitle("Tribal Wars Bot");
         primaryStage.setResizable(true);
         primaryStage.setScene(mainStage);
-        primaryStage.setWidth(600);
-        primaryStage.setHeight(400);
         primaryStage.centerOnScreen();
         primaryStage.show();
         mainScreenController.setStatus("Please enter your login information");
