@@ -41,7 +41,7 @@ public class Brain implements Data{
         if(botState) {
             //timer.schedule(new ExecuteCommands(),data.botInterval * 1000);
             timer = new Timer();
-            timer.scheduleAtFixedRate(new ExecuteCommands(), data.botInterval * 100, 1000);
+            timer.scheduleAtFixedRate(new ExecuteCommands(), data.botInterval, data.botInterval);
         } else {
             timer.cancel();
         }
